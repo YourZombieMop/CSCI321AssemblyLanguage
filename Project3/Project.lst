@@ -1,0 +1,147 @@
+Microsoft (R) Macro Assembler (x64) Version 14.28.29915.0   02/16/22 23:50:13
+MatthewBoyeaProj3.asm					     Page 1 - 1
+
+
+				COMMENT !
+				 * TASK 1
+				 * Precondition: a, b, c, d are all defined integers
+				 * Postcondition: a = (a + b) - (c + d)
+				 * TASK 2
+				 * Precondition: Constants are defined for each day of the week
+				 * Postcondition: An array is initialized with the constants defined for each day of the week
+				 * TASK 3
+				 * Precondition: 
+				 * Postcondition: Variables of each type avaliable in MASM are initialized with relevant values
+				 * TASK 4
+				 * Precondition: Constants are defined as string literals
+				 * Postcondition: A variable is initialized with each string literal
+				 * 
+				 * Author: Matthew Boyea
+				 * Date: 2022/2/16
+				 * !
+
+				ExitProcess proto
+
+ 00000000			.data
+				; TASK 1
+ 00000000 000000FF		a dword 255
+ 00000004 000000FF		b dword 255
+ 00000008 000000FF		c dword 255
+ 0000000C 000000FF		d dword 255
+
+				; TASK 2
+ = 00000001			SUNDAY EQU 1b
+ = 00000002			MONDAY EQU 10b
+ = 00000004			TUESDAY EQU 100b
+ = 00000008			WEDNESDAY EQU 1000b
+ = 00000010			THURSDAY EQU 10000b
+ = 00000020			FRIDAY EQU 100000b
+ = 00000040			SATURDAY EQU 1000000b
+
+ 00000010 00000001		weekArray DWORD SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+	   00000002
+	   00000004
+	   00000008
+	   00000010
+	   00000020
+	   00000040
+
+				; TASK 3
+ 0000002C FF			u8bit byte 255
+ 0000002D 80			s8bit sbyte -128
+ 0000002E FFFF			u16bit word 65535
+ 00000030 8000			s16bit sword -32768
+ 00000032 FFFFFFFF		u32bit dword 4294967295
+ 00000036 80000000		s32bit sdword -2147483648
+
+ 0000003A FFFFFFFFFFFF		farword fword 0FFFFFFFFFFFFh
+ 00000040			quadword qword 0FFFFFFFFFFFFFFFFh
+	   FFFFFFFFFFFFFFFF
+ 00000048			tenbyte tbyte 0FFFFFFFFFFFFFFFFFFFFh
+	   FFFFFFFFFFFFFFFFFFFF
+
+ 00000052 00000000		float real4 0.0
+ 00000056			double real8 0.0
+	   0000000000000000
+ 0000005E			extDouble real10 0.0
+	   00000000000000000000
+
+				; TASK 4
+ = "Hello, World!"		STR_HELLO EQU "Hello, World!"
+ = "Goodbye, World!"		STR_GOODBYE EQU "Goodbye, World!"
+
+ 00000068 48 65 6C 6C 6F	hello db STR_HELLO,0
+	   2C 20 57 6F 72
+	   6C 64 21 00
+ 00000076 47 6F 6F 64 62	bye db STR_GOODBYE,0
+	   79 65 2C 20 57
+	   6F 72 6C 64 21
+	   00
+
+
+
+ 00000000			.code
+ 00000000			main proc
+					; TASK 1
+ 00000000  8B 05 00000000 R		mov	eax,a
+ 00000006  8B 1D 00000004 R		mov ebx,b
+ 0000000C  8B 0D 00000008 R		mov ecx,c
+ 00000012  8B 15 0000000C R		mov edx,d
+
+ 00000018  03 C3			add eax, ebx	; a is a + b
+ 0000001A  03 CA			add ecx, edx	; c is c + d
+ 0000001C  2B C1			sub	eax, ecx	; a is a - c
+
+ 0000001E  E8 00000000 E		call  ExitProcess
+ 00000023			main endp
+
+				end
+Microsoft (R) Macro Assembler (x64) Version 14.28.29915.0   02/16/22 23:50:13
+MatthewBoyeaProj3.asm					     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P 	 00000000 Length= 00000000 External
+main . . . . . . . . . . . . . .	P 	 00000000 _TEXT	Length= 00000023 Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+FRIDAY . . . . . . . . . . . . .	Number	 00000020h   
+MONDAY . . . . . . . . . . . . .	Number	 00000002h   
+SATURDAY . . . . . . . . . . . .	Number	 00000040h   
+STR_GOODBYE  . . . . . . . . . .	Text   	 "Goodbye, World!"
+STR_HELLO  . . . . . . . . . . .	Text   	 "Hello, World!"
+SUNDAY . . . . . . . . . . . . .	Number	 00000001h   
+THURSDAY . . . . . . . . . . . .	Number	 00000010h   
+TUESDAY  . . . . . . . . . . . .	Number	 00000004h   
+WEDNESDAY  . . . . . . . . . . .	Number	 00000008h   
+a  . . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+bye  . . . . . . . . . . . . . .	Byte	 00000076 _DATA	
+b  . . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+c  . . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+double . . . . . . . . . . . . .	QWord	 00000056 _DATA	
+d  . . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+extDouble  . . . . . . . . . . .	TByte	 0000005E _DATA	
+farword  . . . . . . . . . . . .	FWord	 0000003A _DATA	
+float  . . . . . . . . . . . . .	DWord	 00000052 _DATA	
+hello  . . . . . . . . . . . . .	Byte	 00000068 _DATA	
+quadword . . . . . . . . . . . .	QWord	 00000040 _DATA	
+s16bit . . . . . . . . . . . . .	Word	 00000030 _DATA	
+s32bit . . . . . . . . . . . . .	DWord	 00000036 _DATA	
+s8bit  . . . . . . . . . . . . .	Byte	 0000002D _DATA	
+tenbyte  . . . . . . . . . . . .	TByte	 00000048 _DATA	
+u16bit . . . . . . . . . . . . .	Word	 0000002E _DATA	
+u32bit . . . . . . . . . . . . .	DWord	 00000032 _DATA	
+u8bit  . . . . . . . . . . . . .	Byte	 0000002C _DATA	
+weekArray  . . . . . . . . . . .	DWord	 00000010 _DATA	
+
+	   0 Warnings
+	   0 Errors
