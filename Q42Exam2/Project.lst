@@ -1,0 +1,97 @@
+Microsoft (R) Macro Assembler Version 14.28.29915.0	    04/04/22 03:20:39
+Q43Exam						     Page 1 - 1
+
+
+				TITLE Q43Exam2
+				; DESCRIPTION
+				; Implement the following pseudocode in assembly language.
+				; Use short-circuit evaluation and  assume that val1 and X are 32-bit variables.
+				; if(val1 > ecx AND ecx > edx) X = 1  else X = 2
+				; Author: Matthew Boyea
+				; Date: 2022-4-3
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 00000000		X DWORD ?
+ 00000004 00000003		val1 DWORD 3
+
+ 00000000			.code
+ 00000000			main PROC
+ 00000000  B9 00000002			mov ecx,2
+ 00000005  BA 00000001			mov edx,1
+					; if (val1 > ecx AND ecx > edx) X = 1 else X = 2
+
+					; if (val1 <= ecx) goto Otherwise
+ 0000000A  39 0D 00000004 R		cmp val1,ecx
+ 00000010  76 10			jbe Otherwise
+
+					; if (ecx <= edx) goto Otherwise
+ 00000012  3B CA			cmp ecx,edx
+ 00000014  76 0C			jbe Otherwise
+
+					; X = 1
+ 00000016  C7 05 00000000 R		mov X,1
+	   00000001
+ 00000020  EB 0A			jmp Finish
+
+ 00000022			Otherwise:
+					; X = 2
+ 00000022  C7 05 00000000 R		mov X,2
+	   00000002
+ 0000002C			Finish:
+
+					; exit program
+					invoke ExitProcess,0
+ 0000002C  6A 00	   *	    push   +000000000h
+ 0000002E  E8 00000000 E   *	    call   ExitProcess
+ 00000033			main ENDP
+
+				END main
+Microsoft (R) Macro Assembler Version 14.28.29915.0	    04/04/22 03:20:39
+Q43Exam						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000008 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000033 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000033 Public STDCALL
+  Otherwise  . . . . . . . . . .	L Near	 00000022 _TEXT	
+  Finish . . . . . . . . . . . .	L Near	 0000002C _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+X  . . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+val1 . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors
